@@ -1,4 +1,4 @@
-# Jinja Export
+# ComfyUI Jinja Export
 
 将 ComfyUI 工作流 JSON 转换为 Jinja 模板的纯前端工具。
 
