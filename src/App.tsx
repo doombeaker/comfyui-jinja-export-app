@@ -13,6 +13,7 @@ import "@xyflow/react/dist/style.css";
 import type { NodeGroup, ApiFormat } from "./lib/types";
 import { parseApiFormat, generateJinjaTemplate } from "./lib/jinja";
 import { parseGraph, autoLayout } from "./lib/graph";
+import { detectFormat, convertWorkflowToApi } from "./lib/convert";
 import WorkflowNode, { type WorkflowNodeData } from "./WorkflowNode";
 import "./App.css";
 
@@ -173,17 +174,30 @@ function App() {
   const handleParse = useCallback(() => {
     setParseError("");
     try {
-      const data = JSON.parse(jsonText) as ApiFormat;
-      if (typeof data !== "object" || data === null) { setParseError("JSON must be an object"); return; }
-      const firstKey = Object.keys(data)[0];
-      if (!firstKey || !data[firstKey]?.class_type) {
-        setParseError('Not ComfyUI API format. Expected { "nodeId": { "inputs": {...}, "class_type": "..." } }');
+      const parsed = JSON.parse(jsonText);
+      if (typeof parsed !== "object" || parsed === null) { setParseError("JSON must be an object"); return; }
+
+      const format = detectFormat(parsed);
+      let data: ApiFormat;
+
+      if (format === "workflow") {
+        try {
+          data = convertWorkflowToApi(parsed);
+        } catch (e) {
+          setParseError(`Workflow conversion failed: ${(e as Error).message}`);
+          return;
+        }
+      } else if (format === "api") {
+        data = parsed as ApiFormat;
+      } else {
+        setParseError("Not a valid ComfyUI JSON. Expected API format or workflow format.");
         return;
       }
+
       apiDataRef.current = data;
-      const parsed = parseApiFormat(data);
-      setGroups(parsed);
-      buildGraph(data, parsed);
+      const groups = parseApiFormat(data);
+      setGroups(groups);
+      buildGraph(data, groups);
       setStep("select");
     } catch (e) {
       setParseError(`Invalid JSON: ${(e as Error).message}`);
@@ -287,7 +301,7 @@ function App() {
             </div>
             <textarea
               className="json-input"
-              placeholder="Paste your ComfyUI API format JSON here..."
+              placeholder="Paste your ComfyUI API or workflow format JSON here..."
               value={jsonText}
               onChange={(e) => setJsonText(e.target.value)}
             />
