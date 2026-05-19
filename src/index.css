@@ -1,0 +1,294 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f1a;
+  --bg-panel: #161628;
+  --bg-card: #1e1e36;
+  --bg-card-header: #262648;
+  --border: #2e2e4a;
+  --text: #d0d0e0;
+  --text-dim: #8888a0;
+  --text-bright: #f0f0ff;
+  --accent: #7c3aed;
+  --accent-dim: #7c3aed44;
+  --accent-bg: #7c3aed18;
+  --error: #ef4444;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: "SF Mono", "Fira Code", "JetBrains Mono", Consolas, monospace;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+#root { min-height: 100vh; }
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  padding: 24px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+
+.app-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.app-subtitle {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* Steps bar */
+.steps-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.step-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-family: var(--font);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.step-btn:hover:not(:disabled) { background: var(--accent-bg); color: var(--text); }
+.step-btn.active { color: var(--text-bright); background: var(--accent-bg); }
+.step-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.step-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  background: var(--border); color: var(--text-dim);
+}
+
+.step-btn.active .step-num { background: var(--accent); color: #fff; }
+
+.step-line { width: 24px; height: 1px; background: var(--border); }
+
+/* Main */
+.app-main { flex: 1; padding: 20px 0; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px; border: none; border-radius: 6px;
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  font-family: var(--font); transition: all 0.15s;
+}
+
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #6d28d9; }
+.btn-secondary { background: var(--border); color: var(--text); }
+.btn-secondary:hover { background: #3a3a5a; }
+.btn-block { width: 100%; }
+.btn-text { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 12px; }
+.btn-text:hover { color: var(--text-bright); }
+.btn-icon-sm { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 12px; padding: 2px 4px; border-radius: 3px; }
+.btn-icon-sm:hover { color: #ef4444; background: #ef444420; }
+
+/* Input panel */
+.input-panel { max-width: 700px; margin: 0 auto; }
+
+.input-actions { display: flex; gap: 8px; margin-bottom: 12px; }
+
+.json-input {
+  width: 100%;
+  min-height: 300px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.json-input:focus { border-color: var(--accent); }
+
+.error-msg { color: var(--error); font-size: 13px; margin-bottom: 12px; }
+
+.wf-node {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  min-width: 220px;
+  max-width: 280px;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.wf-node-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--accent-dim);
+}
+
+.wf-node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--bg-card-header);
+  border-radius: 8px 8px 0 0;
+  gap: 8px;
+}
+
+.wf-node-title {
+  color: var(--text-bright);
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wf-check-all {
+  width: 18px; height: 18px; border-radius: 3px;
+  border: 1px solid var(--text-dim); background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 11px; color: var(--accent);
+  flex-shrink: 0; padding: 0;
+}
+.wf-check-all.checked { background: var(--accent-bg); border-color: var(--accent); }
+.wf-check-all.partial { background: var(--accent-bg); border-color: var(--accent); opacity: 0.7; }
+
+.wf-node-class {
+  padding: 2px 10px;
+  color: var(--text-dim);
+  font-size: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wf-node-fields {
+  padding: 4px 0;
+}
+
+.wf-field {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  cursor: pointer;
+  gap: 6px;
+  transition: background 0.1s;
+}
+
+.wf-field:hover { background: rgba(255,255,255,0.04); }
+
+.wf-field-selected { background: var(--accent-bg); }
+
+.wf-checkbox {
+  width: 16px; height: 16px; border-radius: 3px;
+  border: 1px solid var(--text-dim); background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 10px; color: var(--accent);
+}
+
+.wf-checkbox.checked { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.wf-field-name {
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.wf-field-value {
+  color: var(--text-dim);
+  font-size: 10px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+  cursor: pointer;
+  padding: 1px 4px;
+  border-radius: 3px;
+  min-width: 0;
+}
+
+.wf-field-value:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.06);
+}
+
+.wf-value-input {
+  flex: 1;
+  min-width: 40px;
+  max-width: 160px;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  color: var(--text-bright);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: var(--mono);
+  outline: none;
+}
+
+.react-flow__node-workflow {
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border: 2px solid var(--bg-card);
+}
+
+.react-flow__edge-path {
+  stroke: #555;
+  stroke-width: 2;
+}
+
+.react-flow__controls {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.react-flow__controls-button {
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  fill: var(--text);
+}
+
+.react-flow__controls-button:hover {
+  background: var(--bg-card);
+}
