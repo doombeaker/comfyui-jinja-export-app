@@ -15,20 +15,28 @@
 
 ## 使用方式
 
-1. 启动开发服务器：
+### 在线使用
+
+访问 [GitHub Pages](https://doombeaker.github.io/comfyui-jinja-export-app/) 直接使用，无需安装。
+
+### 下载单文件
+
+从 [Releases](https://github.com/doombeaker/comfyui-jinja-export-app/releases) 下载 `index.html`，双击用浏览器打开即可，离线可用。
+
+### 本地开发
 
 ```bash
 npm install
 npm run dev
 ```
 
-2. 打开浏览器访问 `http://localhost:5173`
+打开浏览器访问 `http://localhost:5173`
 
-3. 拖拽或上传 ComfyUI 工作流 JSON 文件
+### 操作步骤
 
-4. 在画布上点击节点字段的复选框，选择需要参数化的字段
-
-5. 在右侧面板修改变量名，点击 "Export Template" 导出 Jinja 模板
+1. 拖拽或上传 ComfyUI 工作流 JSON 文件
+2. 在画布上点击节点字段的复选框，选择需要参数化的字段
+3. 在右侧面板修改变量名，点击 "Export Template" 导出 Jinja 模板
 
 ## 支持的 JSON 格式
 
@@ -96,9 +104,16 @@ ComfyUI 保存的 `.json` 文件格式，结构为：
 
 ```bash
 npm run dev       # 启动开发服务器
-npm run build     # 生产构建
+npm run build     # 生产构建（输出单 HTML 文件到 dist/）
 npm test          # 运行测试
+npm run deploy    # 构建并部署到 gh-pages 分支
 ```
+
+### 发布
+
+推送到 `main` 分支后，GitHub Actions 会自动构建并部署到 GitHub Pages。
+
+手动部署：`npm run deploy`
 
 ## 项目结构
 
