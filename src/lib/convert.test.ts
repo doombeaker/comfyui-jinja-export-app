@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { detectFormat, convertWorkflowToApi } from "./convert";
-import type { ApiFormat } from "./types";
 
 describe("detectFormat", () => {
   it("detects API format", () => {
@@ -58,7 +57,7 @@ describe("convertWorkflowToApi", () => {
     expect(api["3"].inputs.sampler_name).toBe("euler");
     expect(api["3"].inputs.scheduler).toBe("normal");
     expect(api["3"].inputs.denoise).toBe(1);
-    expect(api["3"]._meta.title).toBe("KSampler");
+    expect(api["3"]._meta!.title).toBe("KSampler");
   });
 
   it("handles KSampler seed consuming 2 slots (skips control_after_generate)", () => {
@@ -93,7 +92,7 @@ describe("convertWorkflowToApi", () => {
       links: [],
     };
     const api = convertWorkflowToApi(wf);
-    expect(api["6"]._meta.title).toBe("Positive Prompt");
+    expect(api["6"]._meta!.title).toBe("Positive Prompt");
   });
 
   it("falls back to type when no title", () => {
@@ -102,7 +101,7 @@ describe("convertWorkflowToApi", () => {
       links: [],
     };
     const api = convertWorkflowToApi(wf);
-    expect(api["6"]._meta.title).toBe("CLIPTextEncode");
+    expect(api["6"]._meta!.title).toBe("CLIPTextEncode");
   });
 
   it("handles nodes without widgets_values", () => {
@@ -211,7 +210,7 @@ describe("convertWorkflowToApi", () => {
     const api = convertWorkflowToApi(wf);
 
     expect(api["3"].class_type).toBe("KSampler");
-    expect(api["3"]._meta.title).toBe("K采样器");
+    expect(api["3"]._meta!.title).toBe("K采样器");
     expect(api["3"].inputs.seed).toBe(1096743135907963);
     expect(api["3"].inputs.steps).toBe(6);
     expect(api["3"].inputs.cfg).toBe(1);

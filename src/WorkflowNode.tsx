@@ -1,11 +1,12 @@
 import { memo, useState, type FC } from "react";
 import { Handle, Position } from "@xyflow/react";
-import type { GraphNode } from "../lib/graph";
+import type { GraphNode } from "./lib/graph";
 
 export type WorkflowNodeData = GraphNode & {
   selectedFields: Record<string, boolean>;
   onToggleField: (nodeId: string, fieldName: string) => void;
   onFieldValueChange: (nodeId: string, fieldName: string, newValue: unknown) => void;
+  [key: string]: unknown;
 };
 
 const WorkflowNode: FC<{ data: WorkflowNodeData; id: string }> = memo(({ data, id }) => {
@@ -120,7 +121,7 @@ const WorkflowNode: FC<{ data: WorkflowNodeData; id: string }> = memo(({ data, i
         />
       ))}
 
-      {outputSlots.map((slotName, i) => (
+      {outputSlots.map((_slotName, i) => (
         <Handle
           key={`out-${i}`}
           type="source"

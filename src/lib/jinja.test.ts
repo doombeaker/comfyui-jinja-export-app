@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { parseApiFormat, toJinjaDefault, generateJinjaTemplate } from "./jinja";
-import type { ApiFormat, NodeGroup } from "./types";
+import type { ApiFormat } from "./types";
 
 describe("toJinjaDefault", () => {
   it("quotes strings", () => {
